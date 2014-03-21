@@ -57,7 +57,7 @@
     
     
     [[NativeXSDK sharedInstance] setDelegate:self];
-    [[NativeXSDK sharedInstance] createSessionWithAppId:self.appId];
+//    [[NativeXSDK sharedInstance] createSessionWithAppId:self.appId];
     //    [[NativeXSDK sharedInstance] fetchAdWithPlacement:kAdPlacementGameLaunch delegate:self];
     //    // Fetch the interstitial ad.
     [[NativeXSDK sharedInstance] showAdWithCustomPlacement:label];
