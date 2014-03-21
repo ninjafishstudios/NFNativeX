@@ -23,6 +23,6 @@ Pod::Spec.new do |s|
   
   s.requires_arc = true
     
-	s.dependency 'NativeXSDK', :git => 'https://github.com/ninjafishstudios/NativeXSDK'
+	s.dependency 'NativeXSDK'
   
 end
