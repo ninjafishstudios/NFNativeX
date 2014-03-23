@@ -6,13 +6,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NFAdDisplayer.h"
 
 @interface NFNativeX : NSObject
 
 typedef void (^ NFNativeXShowImpressionCompletionHandler)(BOOL installed);
 
 @property (nonatomic, copy) NSString *appId;
-
+@property (nonatomic, unsafe_unretained) id<NFAdDisplayerDelegate> delegate;
 
 + (NFNativeX *)sharedInstance;
 - (void)showInterstitial:(NSString *)label;

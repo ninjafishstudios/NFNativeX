@@ -98,6 +98,8 @@
         _showImpressionCompletionHandler(NO);
         _showImpressionCompletionHandler = nil;
     }
+    
+    
 }
 
 /** Called when error loading an ad (was the SDK initialized correctly?)
@@ -126,7 +128,103 @@
         _showImpressionCompletionHandler(YES);
         _showImpressionCompletionHandler = nil;
     }
+
 }
+
+
+/** Called when ad content has expired for specific adView
+ *
+ * @param adView        the NativeX adView that has expired
+ */
+- (void)nativeXAdViewDidExpire:(NativeXAdView *)adView{
+    
+    if(self.delegate && [self.delegate respondsToSelector:@selector(didFailToLoadInterstitial:)]){
+        [self.delegate didFailToLoadInterstitial:nil];
+    }
+    
+}
+
+/** called right before an ad will be displayed
+ *
+ * @param adView        the NativeX adView that will be displayed
+ */
+- (void)nativeXAdViewWillDisplay:(NativeXAdView *)adView{
+    
+}
+
+
+/** called right before an inline ad will change size (non-modal)
+ *
+ * @param adView        the NativeX adView that will change size
+ * @param newFrame      the new size and position of ad
+ */
+- (void)nativeXAdView:(NativeXAdView *)adView willResizeToFrame:(CGRect)newFrame{
+    
+}
+
+/** called after inline ad has resized (non-modal)
+ *
+ * @param adView        the NativeX adView that changed size
+ * @param newFrame      the new size and position of ad
+ */
+- (void)nativeXAdView:(NativeXAdView *)adView didResizeToFrame:(CGRect)newFrame{
+    
+}
+
+/** called right before an inline ad will expand to take up full screen (modal)
+ *
+ * @param adView        the NativeX adView that will expand
+ */
+- (void)nativeXAdViewWillExpand:(NativeXAdView *)adView{
+    
+}
+
+/** called after an inline ad has expanded to take up full screen (modal)
+ *
+ * @param adView        the NativeX adView that expanded
+ */
+- (void)nativeXAdViewDidExpand:(NativeXAdView *)adView{
+    
+}
+
+/** called right before inline ad will collapse back to default size
+ *
+ * @param adView        the NativeX adView that will collapse
+ */
+- (void)nativeXAdViewWillCollapse:(NativeXAdView *)adView{
+    
+}
+
+/** called after inline ad collapses back to default size
+ *
+ * @param adView        the NativeX adView that collapsed
+ */
+- (void)nativeXAdViewDidCollapse:(NativeXAdView *)adView{
+    
+}
+
+/** called right before an ad will be dismissed (removed from screen)
+ *
+ * @param adView        the NativeX adView that will be dismissed
+ */
+- (void)nativeXAdViewWillDismiss:(NativeXAdView *)adView{
+    if(self.delegate && [self.delegate respondsToSelector:@selector(didDismissInterstitial:)]){
+        [self.delegate didDismissInterstitial:nil];
+    }
+}
+
+/** called after an ad has been dismissed (removed from screen)
+ *
+ * @param adView        the NativeX adView that was dismissed
+ */
+- (void)nativeXAdViewDidDismiss:(NativeXAdView *)adView{
+    if(self.delegate && [self.delegate respondsToSelector:@selector(didDismissInterstitial:)]){
+        [self.delegate didDismissInterstitial:nil];
+    }
+    
+}
+
+
 
 
 
