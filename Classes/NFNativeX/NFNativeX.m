@@ -58,7 +58,8 @@
     
     [[NativeXSDK sharedInstance] setDelegate:self];
 //    [[NativeXSDK sharedInstance] createSessionWithAppId:self.appId];
-    //    [[NativeXSDK sharedInstance] fetchAdWithPlacement:kAdPlacementGameLaunch delegate:self];
+    
+    [[NativeXSDK sharedInstance] fetchAdWithPlacement:kAdPlacementGameLaunch delegate:self];
     //    // Fetch the interstitial ad.
     [[NativeXSDK sharedInstance] showAdWithCustomPlacement:label];
 }
@@ -74,7 +75,7 @@
 
 // Called if the SDK fails to initiate.
 - (void)nativeXSDKDidFailToCreateSession:(NSError *)error{
-
+    
 }
 
 - (void)nativeXAdView:(NativeXAdView *)adView didLoadWithPlacement:(NSString *)placement
@@ -83,6 +84,10 @@
     
     // If you call displayAdView method here the SDK will show the ad as soon as it's ready
     [adView displayAdView];
+    
+    NSLog(@"loaded native x ad");
+    
+    adView.delegate = self;
 }
 
 
@@ -99,6 +104,9 @@
         _showImpressionCompletionHandler = nil;
     }
     
+    if(self.delegate && [self.delegate respondsToSelector:@selector(didFailToLoadInterstitial:)]){
+        [self.delegate didFailToLoadInterstitial:nil];
+    }
     
 }
 
@@ -115,6 +123,9 @@
         _showImpressionCompletionHandler = nil;
     }
     
+    if(self.delegate && [self.delegate respondsToSelector:@selector(didFailToLoadInterstitial:)]){
+        [self.delegate didFailToLoadInterstitial:nil];
+    }
 }
 
 
@@ -137,11 +148,15 @@
  * @param adView        the NativeX adView that has expired
  */
 - (void)nativeXAdViewDidExpire:(NativeXAdView *)adView{
+    NSLog(@"native x ad expired");
     
     if(self.delegate && [self.delegate respondsToSelector:@selector(didFailToLoadInterstitial:)]){
         [self.delegate didFailToLoadInterstitial:nil];
     }
     
+    if(self.delegate && [self.delegate respondsToSelector:@selector(didFailToLoadInterstitial:)]){
+        [self.delegate didFailToLoadInterstitial:nil];
+    }
 }
 
 /** called right before an ad will be displayed
@@ -149,65 +164,18 @@
  * @param adView        the NativeX adView that will be displayed
  */
 - (void)nativeXAdViewWillDisplay:(NativeXAdView *)adView{
-    
+    NSLog(@"native x ad will display");
 }
 
 
-/** called right before an inline ad will change size (non-modal)
- *
- * @param adView        the NativeX adView that will change size
- * @param newFrame      the new size and position of ad
- */
-- (void)nativeXAdView:(NativeXAdView *)adView willResizeToFrame:(CGRect)newFrame{
-    
-}
-
-/** called after inline ad has resized (non-modal)
- *
- * @param adView        the NativeX adView that changed size
- * @param newFrame      the new size and position of ad
- */
-- (void)nativeXAdView:(NativeXAdView *)adView didResizeToFrame:(CGRect)newFrame{
-    
-}
-
-/** called right before an inline ad will expand to take up full screen (modal)
- *
- * @param adView        the NativeX adView that will expand
- */
-- (void)nativeXAdViewWillExpand:(NativeXAdView *)adView{
-    
-}
-
-/** called after an inline ad has expanded to take up full screen (modal)
- *
- * @param adView        the NativeX adView that expanded
- */
-- (void)nativeXAdViewDidExpand:(NativeXAdView *)adView{
-    
-}
-
-/** called right before inline ad will collapse back to default size
- *
- * @param adView        the NativeX adView that will collapse
- */
-- (void)nativeXAdViewWillCollapse:(NativeXAdView *)adView{
-    
-}
-
-/** called after inline ad collapses back to default size
- *
- * @param adView        the NativeX adView that collapsed
- */
-- (void)nativeXAdViewDidCollapse:(NativeXAdView *)adView{
-    
-}
 
 /** called right before an ad will be dismissed (removed from screen)
  *
  * @param adView        the NativeX adView that will be dismissed
  */
 - (void)nativeXAdViewWillDismiss:(NativeXAdView *)adView{
+    NSLog(@"nativex ad view will dismiss");
+    
     if(self.delegate && [self.delegate respondsToSelector:@selector(didDismissInterstitial:)]){
         [self.delegate didDismissInterstitial:nil];
     }
@@ -218,12 +186,12 @@
  * @param adView        the NativeX adView that was dismissed
  */
 - (void)nativeXAdViewDidDismiss:(NativeXAdView *)adView{
+    NSLog(@"nativex ad view did dismiss");
     if(self.delegate && [self.delegate respondsToSelector:@selector(didDismissInterstitial:)]){
         [self.delegate didDismissInterstitial:nil];
     }
     
 }
-
 
 
 
